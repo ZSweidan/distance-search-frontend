@@ -23,10 +23,9 @@ interface Company {
   services: string;
   offices: Object;
 }
-
 const FilterPage: React.FC = () => {
   const [range, setRange] = useState("");
-  const [partners, setPartners] = useState<Company[]>([]);
+  const [partners, setPartners] = useState<any[]>([]);
   const classes = useStyles();
   const getContacts = () => {
     let url = "http://127.0.0.1:9000/getRange";
@@ -34,9 +33,17 @@ const FilterPage: React.FC = () => {
       axios
         .post(url, range, {})
         .then((res) => {
-          console.log("RES", res.data);
-          setPartners(res.data);
-          console.log("partners", partners);
+          console.log("sorting", res.data[0].id);
+          const data: Company[] = res.data;
+          const companyArr: Company[] = [];
+          data.forEach((obj) => {
+            console.log(obj.urlName);
+            companyArr.push(obj);
+          });
+          companyArr.sort((a, b) =>
+            a.organization.localeCompare(b.organization)
+          );
+          setPartners(companyArr);
         })
         .catch(console.log)
         .catch((err) => console.log(err.respone.data.message));
