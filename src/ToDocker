@@ -1,0 +1,5 @@
+installing npm
+installing typescript
+npm install react-router-dom @types/react-router-dom
+npm install react-bootstrap
+npm install --save @types/react-bootstrap
