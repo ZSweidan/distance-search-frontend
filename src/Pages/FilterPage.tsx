@@ -29,7 +29,7 @@ const FilterPage: React.FC = () => {
   const [validInput, setValidInput] = useState(false);
   const classes = useStyles();
   const getContacts = () => {
-    let url = "http://127.0.0.1:9000/getRange";
+    let url = "http://192.168.99.100:9001/getRange";
     if (parseInt(range) < 0) {
       setValidInput(true);
     } else {
