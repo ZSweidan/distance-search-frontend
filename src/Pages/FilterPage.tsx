@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import Container from "@material-ui/core/Container";
@@ -29,7 +29,7 @@ const FilterPage: React.FC = () => {
   const [validInput, setValidInput] = useState(false);
   const classes = useStyles();
   const getContacts = () => {
-    let url = "http://192.168.99.100:9001/getRange";
+    let url = "http://127.0.0.1:9000/getRange";
     if (parseInt(range) < 0) {
       setValidInput(true);
     } else {
@@ -38,10 +38,8 @@ const FilterPage: React.FC = () => {
         axios
           .post(url, range, {})
           .then((res) => {
-            console.log("sorting", res.data);
             const data: Company[] = res.data;
             const companyArr: Company[] = [];
-            console.log("data length", data.length);
             if (data.length !== 0) {
               data.forEach((obj) => {
                 companyArr.push(obj);
@@ -62,7 +60,7 @@ const FilterPage: React.FC = () => {
 
   return (
     <>
-      <Container>
+      <Container maxWidth="sm">
         <form>
           <label>
             Range of kms:

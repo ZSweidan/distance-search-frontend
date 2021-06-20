@@ -10,9 +10,6 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <Route exact={true} path={RouterPathEnum.HOME} component={FilterPage}/>
-        <Route path={RouterPathEnum.ABOUT} component={FilterPage}/>
-        <Route path={RouterPathEnum.MEMBER} component={FilterPage}/>
-        <Redirect to={RouterPathEnum.HOME} />
       </Switch>
   </BrowserRouter>
   );
