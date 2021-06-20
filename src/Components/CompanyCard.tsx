@@ -4,7 +4,9 @@ import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-   
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+
 const useStyles = makeStyles((theme) => ({
   inline: {
     display: 'inline',
@@ -27,7 +29,20 @@ type CompanyCardProps = {
 const CompanyCard: React.FC<CompanyCardProps> = ({id, urlName, organization, customerLocations, willWorkRemotely, services, offices}) => {
 
   const classes = useStyles();
-
+ 
+  return (
+    <>
+    <TableRow key={id}>
+    <TableCell component="th" scope="row">
+      {organization}
+    </TableCell>
+    <TableCell>{customerLocations}</TableCell>
+    <TableCell>{services}</TableCell>
+    {/* <TableCell align="right">{row.carbs}</TableCell>
+    <TableCell align="right">{row.protein}</TableCell> */}
+  </TableRow>
+  </>
+  )
   return (
    <>
       <ListItem alignItems="flex-start">

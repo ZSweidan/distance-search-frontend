@@ -1,17 +1,26 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import Box from "@material-ui/core/Box";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 import Container from "@material-ui/core/Container";
+import List from "@material-ui/core/List";
 import CompanyCard from "../Components/CompanyCard";
 import axios from "axios";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+    paddingTop: 200,
     width: "100%",
-    maxWidth: "36ch",
-    backgroundColor: theme.palette.background.paper,
+    // maxWidth: "36ch",
   },
-}));
+});
 
 interface Company {
   id: number;
@@ -60,7 +69,7 @@ const FilterPage: React.FC = () => {
 
   return (
     <>
-      <Container maxWidth="sm">
+      <Box m={2}>
         <form>
           <label>
             Range of kms:
@@ -81,30 +90,43 @@ const FilterPage: React.FC = () => {
             }}
           />
         </form>
-        <List className={classes.root}>
-          {validInput === true ? (
-            <h3>Please enter a positive integer</h3>
-          ) : partners.length !== 0 ? (
-            partners.map((company: Company) => (
-              <CompanyCard
-                key={`card-${company.id}`}
-                id={company.id}
-                urlName={company.urlName}
-                organization={company.organization}
-                customerLocations={company.customerLocations}
-                willWorkRemotely={company.willWorkRemotely}
-                website={company.website + ""}
-                services={company.services}
-                offices={company.offices}
-              />
-            ))
-          ) : (
-            <>
-              <h3>No available companies within the entered range</h3>
-            </>
-          )}
-        </List>
-      </Container>
+      </Box>
+      <Box m={2}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Organization</TableCell>
+                <TableCell>Customer Locations</TableCell>
+                <TableCell>Services</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {validInput === true ? (
+                <h3>Please enter a positive integer</h3>
+              ) : partners.length !== 0 ? (
+                partners.map((company: Company) => (
+                  <CompanyCard
+                    key={`card-${company.id}`}
+                    id={company.id}
+                    urlName={company.urlName}
+                    organization={company.organization}
+                    customerLocations={company.customerLocations}
+                    willWorkRemotely={company.willWorkRemotely}
+                    website={company.website + ""}
+                    services={company.services}
+                    offices={company.offices}
+                  />
+                ))
+              ) : (
+                <>
+                  <h3>No available companies within the entered range</h3>
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </>
   );
 };
