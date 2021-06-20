@@ -25,41 +25,49 @@ interface Company {
 }
 const FilterPage: React.FC = () => {
   const [range, setRange] = useState("");
-  const [partners, setPartners] = useState<any[]>([]);
+  const [partners, setPartners] = useState<Company[]>([]);
+  const [validInput, setValidInput] = useState(false);
   const classes = useStyles();
   const getContacts = () => {
     let url = "http://127.0.0.1:9000/getRange";
-    try {
-      axios
-        .post(url, range, {})
-        .then((res) => {
-          console.log("sorting", res.data[0].id);
-          const data: Company[] = res.data;
-          const companyArr: Company[] = [];
-          data.forEach((obj) => {
-            console.log(obj.urlName);
-            companyArr.push(obj);
-          });
-          companyArr.sort((a, b) =>
-            a.organization.localeCompare(b.organization)
-          );
-          setPartners(companyArr);
-        })
-        .catch(console.log)
-        .catch((err) => console.log(err.respone.data.message));
-    } catch (err) {
-      // Handle Error Here
-      console.error(err);
+    if (parseInt(range) < 0) {
+      setValidInput(true);
+    } else {
+      setValidInput(false);
+      try {
+        axios
+          .post(url, range, {})
+          .then((res) => {
+            console.log("sorting", res.data);
+            const data: Company[] = res.data;
+            const companyArr: Company[] = [];
+            console.log("data length", data.length);
+            if (data.length !== 0) {
+              data.forEach((obj) => {
+                companyArr.push(obj);
+              });
+              companyArr.sort((a, b) =>
+                a.organization.localeCompare(b.organization)
+              );
+            }
+            setPartners(companyArr);
+          })
+          .catch(console.log)
+          .catch((err) => console.log(err.respone.data.message));
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
   return (
     <>
-      <Container maxWidth="sm">
+      <Container>
         <form>
           <label>
             Range of kms:
             <input
+              type="number"
               name="numberOfKm"
               onChange={(event) => {
                 setRange(event.target.value);
@@ -76,19 +84,27 @@ const FilterPage: React.FC = () => {
           />
         </form>
         <List className={classes.root}>
-          {partners.map((company: Company) => (
-            <CompanyCard
-              key={`card-${company.id}`}
-              id={company.id}
-              urlName={company.urlName}
-              organization={company.organization}
-              customerLocations={company.customerLocations}
-              willWorkRemotely={company.willWorkRemotely}
-              website={company.website + ""}
-              services={company.services}
-              offices={company.offices}
-            />
-          ))}
+          {validInput === true ? (
+            <h3>Please enter a positive integer</h3>
+          ) : partners.length !== 0 ? (
+            partners.map((company: Company) => (
+              <CompanyCard
+                key={`card-${company.id}`}
+                id={company.id}
+                urlName={company.urlName}
+                organization={company.organization}
+                customerLocations={company.customerLocations}
+                willWorkRemotely={company.willWorkRemotely}
+                website={company.website + ""}
+                services={company.services}
+                offices={company.offices}
+              />
+            ))
+          ) : (
+            <>
+              <h3>No available companies within the entered range</h3>
+            </>
+          )}
         </List>
       </Container>
     </>
