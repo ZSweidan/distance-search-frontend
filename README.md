@@ -1,46 +1,43 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Setup
 
-## Available Scripts
+First, checkout this project locally and then follow these steps:
 
-In the project directory, you can run:
+0. Go through the Docker [installation](https://docs.docker.com/installation/) and [getting started guide](https://docs.docker.com/mac/started/) before you start.
+1. Install the [Docker Toolbox](https://www.docker.com/docker-toolbox).
+2. Start a "Quickstart Terminal" session (see the getting started guide).
+3. Build the Docker image: `docker build -t hello-world .`
+4. Run the image in a container: `docker run -d -p 4001:4000 hello-world`
+  - The `-d` flag says to run the container in the background (daemon mode).
+  - The `-p` flag maps port 4000 from the container to port 4001 on the docker machine.
+5. View your new container: `docker ps -a`
+6. Check the logs for your container: `docker logs <container-id>`
+7. Check the port of the container: `docker port <container-id>`
+8. Open the app running on the docker machine: `open http://$(docker-machine ip default):4001`
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## File Structure
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Within the download you'll find the following directories and files:
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+my-tsx-app3/
+┣ node_modules/
+┣ src/
+┃ ┣ Components/
+┃ ┣ Enums/
+┃ ┣ Pages/
+┃ ┣ App.css
+┃ ┣ App.test.tsx
+┃ ┣ App.tsx
+┃ ┣ index.css
+┃ ┣ index.tsx
+┃ ┣ logo.svg
+┃ ┣ react-app-env.d.ts
+┃ ┣ reportWebVitals.ts
+┃ ┗ setupTests.ts
+┣ .gitignore
+┣ Dockerfile
+┣ package-lock.json
+┣ package.json
+┣ README.md
+┗ tsconfig.json
